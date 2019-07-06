@@ -9,33 +9,14 @@ import { Subject } from 'rxjs';
 })
 export class RecipeService {
   recipesChange = new Subject();
-  private recipes: Recipe[] = [
-    new Recipe('Idli',
-      'Idli or idly are a type of savoury rice cake, originating from the Indian subcontinent, popular as breakfast foods in southern India and northern Sri Lanka.',
-      'https://vaya.in/recipes/wp-content/uploads/2018/02/Idli-and-Sambar-1.jpg',
-      [
-        new Ingredient('rice', 1)
-      ]
-    ),
-    new Recipe('Cake ',
-      'Cake is a form of sweet dessert that is typically baked.',
-      'https://happycakestudio.files.wordpress.com/2017/11/img_3546.jpg?w=1277&h=1277',
-      [
-        new Ingredient('chocolate', 3),
-        new Ingredient('sugar', 1)
-      ]
-    ),
-    new Recipe('Fried Rice',
-      'Fried rice is a dish of cooked rice',
-      'https://i1.wp.com/www.mrspskitchen.net/wp-content/uploads/20171004-_TDP0298.jpg',
-      [
-        new Ingredient('rice', 1),
-        new Ingredient('carrot', 2)
-      ]
+  private recipes: Recipe[] = [];
+  constructor(private sl: ShoppingListService) {
+  }
 
-    )
-  ];
-  constructor(private sl: ShoppingListService) { }
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChange.next(this.recipes.slice());
+  }
 
   getRecipes() {
     return this.recipes.slice();
